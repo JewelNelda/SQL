@@ -1,0 +1,126 @@
+Select *
+From [Portfolio Project]..circuits$
+
+Select *
+From [Portfolio Project]..races$
+
+Select *
+From [Portfolio Project]..results$
+
+Select *
+From [Portfolio Project]..seasons$
+
+Select *
+From [Portfolio Project]..drivers$
+
+Select *
+From [Portfolio Project]..constructors$
+
+Select *
+From [Portfolio Project]..constructor_results$
+
+
+--sort out data needed
+
+Select raceId, year, circuitId, name as circuitname, date
+From [Portfolio Project]..races$
+
+Select circuitId, name as circuitname, location, country
+From [Portfolio Project]..circuits$
+
+Select resultId, raceId, driverId, constructorId, number as drivernumber, grid, position, points, rank, statusId
+From [Portfolio Project]..results$
+
+Select year
+From [Portfolio Project]..seasons$
+
+Select driverId, number as drivernumber, code, forename, surname
+From [Portfolio Project]..drivers$
+
+Select constructorId, name
+From [Portfolio Project]..constructors$
+
+Select constructorId, raceId, constructorResultsId, points
+From [Portfolio Project]..constructor_results$
+
+--combine sorted data to get the data needed
+--data needed: driver+race, driver+result, driver+circuit, circuit+season, circuit+race, results+contstructorResult
+
+Select rac.raceId, rac.year, rac.circuitId, rac.name as circuitname, circ.location, circ.country, rac.date
+From [Portfolio Project]..races$ rac
+Join [Portfolio Project]..circuits$ circ
+	On rac.circuitId = circ.circuitId
+Where rac.year > 2010
+Order by 2,3
+
+Select sea.year, rac.raceId, rac.circuitId, rac.name as circuitname, rac.date
+From [Portfolio Project]..seasons$ sea
+Join [Portfolio Project]..races$ rac
+	On rac.year = sea.year
+Where sea.year > 2010
+Order by 1,2
+
+
+
+Select dri.driverId, dri.number as drivernumber, dri.code, dri.forename, dri.surname, res.points
+From [Portfolio Project]..drivers$ dri
+Join [Portfolio Project]..results$ res
+	on dri.driverId = res.driverId
+
+
+Select cr.constructorId, con.name, cr.raceId, cr.constructorResultsId
+From [Portfolio Project]..constructor_results$ cr
+Join [Portfolio Project]..constructors$ con
+	ON con.constructorId = cr.constructorId
+
+Select cr.constructorId, cr.raceId, cr.constructorResultsId, res.resultId, res.driverId
+From [Portfolio Project]..constructor_results$ cr
+Join [Portfolio Project]..results$ res
+	On cr.constructorId = res.constructorId
+
+
+--to use query for view
+
+SELECT cr.constructorId, con.name, cr.raceId, cr.constructorResultsId, res.resultId, res.driverId
+FROM [Portfolio Project]..constructor_results$ cr
+INNER JOIN [Portfolio Project]..constructors$ con 
+	ON con.constructorId = cr.constructorId 
+INNER JOIN [Portfolio Project]..results$ res 
+	On cr.constructorId = res.constructorId
+
+Select con.name, res.constructorId, dri.driverId, dri.number as drivernumber, dri.code, dri.forename, dri.surname, res.position, res.resultId, res.raceId, res.points, res.rank 
+From [Portfolio Project]..drivers$ dri
+Inner Join [Portfolio Project]..results$ res
+	on dri.driverId = res.driverId
+INNER JOIN [Portfolio Project]..constructors$ con 
+	ON con.constructorId = res.constructorId 
+Where position is not null 
+
+
+Select sea.year, rac.raceId, rac.circuitId, rac.name as circuitname, rac.date, res.number as drivnumber, res.resultId, res.driverId,dri.code, dri.forename, dri.surname, res.points
+From [Portfolio Project]..seasons$ sea
+Inner Join [Portfolio Project]..races$ rac
+	On rac.year = sea.year
+Inner Join [Portfolio Project]..results$ res
+	On res.raceId = rac.raceId 
+Inner Join [Portfolio Project]..drivers$ dri
+	On res.driverId = dri.driverId
+Where sea.year > 2010  
+
+
+Drop Table if exists RaceSeason;
+With RaceSeason (year, raceId, circuitId, name, date, number, points, driverId) 
+As
+(
+	Select sea.year, rac.raceId, rac.circuitId, rac.name as circuitname, rac.date, res.number as drinumber, res.points, res.driverId
+From [Portfolio Project]..seasons$ sea
+Inner Join [Portfolio Project]..races$ rac
+	On rac.year = sea.year
+Inner Join [Portfolio Project]..results$ res
+	On res.raceId = rac.raceId 
+Where sea.year > 2010
+)
+
+Select year, raceId, circuitId, name as circname, date, number as drinumber, points, driverId
+From RaceSeason
+Order by 1,2
