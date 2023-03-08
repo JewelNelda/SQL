@@ -1,0 +1,245 @@
+Select *
+From [Portfolio Project]..['Data Sales Adidas$']
+
+--separate men and womens product
+Select Retailer, [Retailer ID], InvoiceDateConverted, Region, State, City, Product, [Price per Unit], [Units Sold], [Total Sales], [Operating Profit], [Sales Method]
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Product Like 'Women%' And Product like '%Street Footwear'
+
+
+Select Retailer, [Retailer ID], InvoiceDateConverted, Region, State, City, Product, [Price per Unit], [Units Sold], [Total Sales], [Operating Profit], [Sales Method]
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Product Like 'Women%' And Product like '%Athletic Footwear'
+
+Select Retailer, [Retailer ID], InvoiceDateConverted, Region, State, City, Product, [Price per Unit], [Units Sold], [Total Sales], [Operating Profit], [Sales Method]
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Product Like 'Women%' And Product like '%Apparel'
+
+Select Retailer, [Retailer ID], InvoiceDateConverted, Region, State, City, Product, [Price per Unit], [Units Sold], [Total Sales], [Operating Profit], [Sales Method]
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Product Like 'Men%' And Product like '%Street Footwear'
+
+Select Retailer, [Retailer ID], InvoiceDateConverted, Region, State, City, Product, [Price per Unit], [Units Sold], [Total Sales], [Operating Profit], [Sales Method]
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Product Like 'Men%' And Product like '%Athletic Footwear'
+
+Select Retailer, [Retailer ID], InvoiceDateConverted, Region, State, City, Product, [Price per Unit], [Units Sold], [Total Sales], [Operating Profit], [Sales Method]
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Product Like 'Men%' And Product like '%Apparel'
+
+--organize retailer
+
+Select Region
+From [Portfolio Project]..['Data Sales Adidas$']
+Group by Region
+
+Select Retailer, COUNT([Retailer ID]) As TotalRetailStores
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Region = 'Midwest'
+Group by Retailer
+Order By TotalRetailStores Desc
+
+Select Retailer, COUNT([Retailer ID]) As TotalRetailStores
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Region = 'Northeast'
+Group by Retailer
+Order By TotalRetailStores Desc
+
+Select Retailer, COUNT([Retailer ID]) As TotalRetailStores
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Region = 'South'
+Group by Retailer
+Order By TotalRetailStores Desc
+
+Select Retailer, COUNT([Retailer ID]) As TotalRetailStores
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Region = 'Southeast'
+Group by Retailer
+Order By TotalRetailStores Desc
+
+Select Retailer, COUNT([Retailer ID]) As TotalRetailStores
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Region = 'West'
+Group by Retailer
+Order By TotalRetailStores Desc
+
+--use this and visualize total units sold per store
+--total units sold per store
+Select Retailer, SUM([Units Sold]) As TotalUnitsSold, SUM([Total Sales]) AS TotalSales
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Retailer = 'Foot Locker'
+Group by Retailer
+
+Select Retailer, SUM([Units Sold]) As TotalUnitsSold, SUM([Total Sales]) AS TotalSales
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Retailer Like 'Kohl%'
+Group by Retailer
+
+Select Retailer, SUM([Units Sold]) As TotalUnitsSold, SUM([Total Sales]) AS TotalSales
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Retailer = 'Amazon'
+Group by Retailer
+
+Select Retailer, SUM([Units Sold]) As TotalUnitsSold, SUM([Total Sales]) AS TotalSales
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Retailer = 'Sports Direct'
+Group by Retailer
+
+Select Retailer, SUM([Units Sold]) As TotalUnitsSold, SUM([Total Sales]) AS TotalSales
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Retailer = 'Walmart'
+Group by Retailer
+
+Select Retailer, SUM([Units Sold]) As TotalUnitsSold, SUM([Total Sales]) AS TotalSales
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Retailer = 'West Gear'
+Group by Retailer
+
+--Total of units  sold and total of retail stores
+
+Select SUM([Units Sold]) As TotalUnitsSold
+From [Portfolio Project]..['Data Sales Adidas$']
+
+Select Retailer, COUNT(Retailer) As TotalStores
+From [Portfolio Project]..['Data Sales Adidas$']
+Group By Retailer 
+
+--use for visualization
+--yearly sales overall
+Select InvoiceDateConverted, Retailer, [Units Sold], [Total Sales]
+From [Portfolio Project]..['Data Sales Adidas$']
+Where InvoiceDateConverted Like '2020%'
+Order By InvoiceDateConverted Asc
+
+Select InvoiceDateConverted, Retailer, [Units Sold], [Total Sales]
+From [Portfolio Project]..['Data Sales Adidas$']
+Where InvoiceDateConverted Like '2021%'
+Order By InvoiceDateConverted Asc
+
+
+--Total sales per product
+--use to visualize
+Select Product, SUM([Units Sold]) AS TotalUnitsSold,SUM([Total Sales]) AS TotalSales
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Product Like 'Women%' And Product like '%Street Footwear'
+Group by Product
+
+Select Product, SUM([Units Sold]) AS TotalUnitsSold,SUM([Total Sales]) AS TotalSales
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Product Like 'Women%' And Product like '%Athletic Footwear'
+Group by Product
+
+Select Product, SUM([Units Sold]) AS TotalUnitsSold,SUM([Total Sales]) AS TotalSales
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Product Like 'Women%' And Product like '%Apparel'
+Group by Product
+
+Select Product, SUM([Units Sold]) AS TotalUnitsSold,SUM([Total Sales]) AS TotalSales
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Product Like 'Men%' And Product like '%Street Footwear'
+Group by Product
+
+Select Product, SUM([Units Sold]) AS TotalUnitsSold,SUM([Total Sales]) AS TotalSales
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Product Like 'Men%' And Product like '%Athletic Footwear'
+Group by Product
+
+Select Product, SUM([Units Sold]) AS TotalUnitsSold,SUM([Total Sales]) AS TotalSales
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Product Like 'Men%' And Product like '%Apparel'
+Group by Product
+
+
+--update the date 
+Select InvoiceDateConverted, Convert(date, [Invoice Date])
+From [Portfolio Project]..['Data Sales Adidas$']
+
+Update [Portfolio Project]..['Data Sales Adidas$']
+Set [Invoice Date] = Convert(date, [Invoice Date])
+
+Alter Table [Portfolio Project]..['Data Sales Adidas$']
+Add InvoiceDateConverted Date
+
+Update [Portfolio Project]..['Data Sales Adidas$']
+Set InvoiceDateConverted = Convert(date, [Invoice Date])
+
+
+
+--sales+gender+state+footwear= FootwearSalesPerState
+
+Select Product, State, City, [Units Sold], [Total Sales], Retailer, InvoiceDateConverted, [Sales Method]
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Product Like 'Men%' And Product like '%Street Footwear' And InvoiceDateConverted Like '2020%' 
+Order by InvoiceDateConverted Asc
+
+
+Select Product, State, City, [Units Sold], [Total Sales], Retailer, InvoiceDateConverted
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Product Like 'Men%' And Product like '%Street Footwear' And InvoiceDateConverted Like '2020%'
+Order by InvoiceDateConverted Asc
+
+
+Select Product, State, City, [Units Sold], [Total Sales], Retailer, InvoiceDateConverted
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Product Like 'Men%' And Product like '%Athletic Footwear' And InvoiceDateConverted Like '2020%'
+Order by InvoiceDateConverted Asc
+
+Select Product, State, City, [Units Sold], [Total Sales], Retailer, InvoiceDateConverted
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Product Like 'Men%' And Product like '%Street Footwear' And InvoiceDateConverted Like '2021%'
+Order by InvoiceDateConverted Asc
+
+Select Product, State, City, [Units Sold], [Total Sales], Retailer, InvoiceDateConverted
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Product Like 'Men%' And Product like '%Athletic Footwear' And InvoiceDateConverted Like '2021%'
+Order by InvoiceDateConverted Asc
+
+
+Select Product, State, [Units Sold], [Total Sales], Retailer, InvoiceDateConverted
+From [Portfolio Project]..['Data Sales Adidas$']
+Where Product Like 'Women%'
+
+--sales per sales method and invoice date and product with retailer
+--to see sales of product with retailer and sales method per year
+
+Select InvoiceDateConverted, Retailer, Product, [Units Sold], [Total Sales], [Sales Method]
+From [Portfolio Project]..['Data Sales Adidas$']
+Where InvoiceDateConverted like '2020%' and [Sales Method] like 'Outlet'
+Order by InvoiceDateConverted
+
+Select InvoiceDateConverted, Retailer, Product, [Units Sold], [Total Sales], [Sales Method]
+From [Portfolio Project]..['Data Sales Adidas$']
+Where InvoiceDateConverted like '2020%' and [Sales Method] like 'In-store'
+Order by InvoiceDateConverted
+
+Select InvoiceDateConverted, Retailer, Product, [Units Sold], [Total Sales], [Sales Method]
+From [Portfolio Project]..['Data Sales Adidas$']
+Where InvoiceDateConverted like '2020%' and [Sales Method] like 'Online'
+Order by InvoiceDateConverted
+
+
+Select InvoiceDateConverted, Retailer, Product, [Units Sold], [Total Sales], [Sales Method]
+From [Portfolio Project]..['Data Sales Adidas$']
+Where InvoiceDateConverted like '2021%' and [Sales Method] like 'Outlet'
+Order by InvoiceDateConverted
+
+Select InvoiceDateConverted, Retailer, Product, [Units Sold], [Total Sales], [Sales Method]
+From [Portfolio Project]..['Data Sales Adidas$']
+Where InvoiceDateConverted like '2021%' and [Sales Method] like 'In-store'
+Order by InvoiceDateConverted
+
+Select InvoiceDateConverted, Retailer, Product, [Units Sold], [Total Sales], [Sales Method]
+From [Portfolio Project]..['Data Sales Adidas$']
+Where InvoiceDateConverted like '2021%' and [Sales Method] like 'Online'
+Order by InvoiceDateConverted
+
+--use for visualization
+Select InvoiceDateConverted, Retailer, Product, [Units Sold], [Total Sales], [Sales Method]
+From [Portfolio Project]..['Data Sales Adidas$']
+Where InvoiceDateConverted like '2020%' 
+Order by InvoiceDateConverted
+
+Select InvoiceDateConverted, Retailer, Product, [Units Sold], [Total Sales], [Sales Method]
+From [Portfolio Project]..['Data Sales Adidas$']
+Where InvoiceDateConverted like '2021%'
+Order by InvoiceDateConverted
